@@ -1,0 +1,11 @@
+.vscode
+node_modules
+app/frontend/static/frontend
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
