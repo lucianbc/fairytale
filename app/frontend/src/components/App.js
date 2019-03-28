@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
 import store from '../store';
 
-import Editor, { FairyEditorr } from './Editor'
+import FairyEditor from './editor'
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
       <Provider store={store}>
         <h1>React App Title</h1>
         <div>
-          <FairyEditorr />
+          <FairyEditor />
         </div>
       </Provider>
     )
