@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <h1>React App Title</h1>
-        <div>
+        <div className='container'>
           <FairyEditor />
         </div>
       </Provider>
