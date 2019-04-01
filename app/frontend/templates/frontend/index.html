@@ -6,6 +6,18 @@
   <title>Fairytale Gone Bad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+  <style>
+    div.DraftEditor-root {
+      margin:auto;
+      height:300px;
+      overflow-y: scroll;
+      padding:20px;
+      font-size: 18px;
+      font-family: 'calibri', sans-serif;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
