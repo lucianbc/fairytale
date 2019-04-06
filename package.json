@@ -29,8 +29,12 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
+    "react-alert": "^5.4.0",
+    "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.8.5",
     "react-redux": "^6.0.1",
+    "react-router-dom": "^5.0.0",
+    "react-transition-group": "^2.8.0",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
