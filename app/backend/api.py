@@ -3,10 +3,7 @@ from rest_framework import viewsets, permissions
 from .serializers import StorySerializer
 
 # Story Viewset
-
-
 class StoryViewSet(viewsets.ModelViewSet):
-    queryset = Story.objects.all()
     permission_classes = [
         permissions.IsAuthenticated
     ]
@@ -16,4 +13,8 @@ class StoryViewSet(viewsets.ModelViewSet):
         return self.request.user.stories.all()
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(author=self.request.user)
+
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)

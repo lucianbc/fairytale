@@ -6,8 +6,8 @@ import './editor.css';
 
 import { updateEditorContent } from '../../actions/editor'
 
-const myEditor = ({ editorState, updateContent }) => (
-  <div className='border border-primary rounded h-100'>
+const myEditor = ({ editorState, updateContent, dirty }) => (
+  <div className={"border rounded h-100" + (dirty ? " border-danger" : " border-primary")}>
     <div className='RichEditor-controls' style={{padding:"10px 0 0px 10px"}}>
       <span onClick={blockStyle(editorState, updateContent, "header-one")} className={blockClass(editorState, "header-one")}>H1</span>
       <span onClick={blockStyle(editorState, updateContent, "header-two")} className={blockClass(editorState, "header-two")}>H2</span>
@@ -35,10 +35,10 @@ const mapStateToProps = state => {
   return state.editor 
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateContent: updateEditorContent(dispatch),
-  handleKeyCommand: handleKeyCommand(dispatch)
-})
+const mapDispatchToProps = {
+  updateContent: updateEditorContent,
+  handleKeyCommand
+};
 
 export default connect(
   mapStateToProps,
