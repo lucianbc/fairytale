@@ -1,6 +1,7 @@
 import {
   OVERLAY_CHANGE,
-  STORIES_LOADED
+  STORIES_LOADED,
+  STORY_DELETED
 } from "../actions/userStories";
 
 const initialState = {
@@ -22,6 +23,12 @@ export default function(state = initialState, action) {
         ...state,
         showOverlay: false,
         stories: action.payload
+      }
+    case STORY_DELETED:
+      const newStories = state.stories.filter(s => s.id !== action.payload)
+      return {
+        ...state,
+        stories: newStories
       }
     default:
       return state;
