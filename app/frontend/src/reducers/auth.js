@@ -6,7 +6,11 @@ import {
     LOGIN_FAILED,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAILED
+    REGISTER_FAILED,
+    PROFILE_UPDATE_FAIL,
+    PROFILE_UPDATE_SUCCESS,
+    PASSWORD_CHANGED,
+    PASSWORD_CHANGE_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -39,6 +43,15 @@ export default function (state = initialState, action) {
                 isAuthenticated: true,
                 isLoading: false
             };
+        case PROFILE_UPDATE_SUCCESS:
+        case PASSWORD_CHANGED:
+            return {
+                ...state,
+                user: action.payload,
+            }
+        case PROFILE_UPDATE_FAIL:
+        case PASSWORD_CHANGE_FAIL:
+            return state;
         case AUTH_ERROR:
         case LOGIN_FAILED:
         case LOGOUT_SUCCESS:
