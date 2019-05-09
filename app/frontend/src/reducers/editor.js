@@ -3,10 +3,17 @@ import {
   UPDATE_EDITOR_CONTENT,
   LOADING_UPDATE,
   SUGGESTION_RECEIVED,
+  
   TITLE_EDIT_CANCEL,
   TITLE_UPDATED,
   TITLE_TYPE,
   ACTIVATE_TITLE_EDIT,
+
+  DESC_EDIT_CANCEL,
+  DESC_UPDATED,
+  DESC_TYPE,
+  ACTIVATE_DESC_EDIT,
+
   UPDATE_OVERLAY,
   STORY_FETCHED,
   STORY_CONTENT_SAVED
@@ -16,10 +23,13 @@ const initialState = {
   editorState: EditorState.createEmpty(),
   suggestionState: EditorState.createEmpty(),
   isSugestionLoading: false,
-  storyTitle: "",
+  storyTitle: "",  
+  storyDescription: "",
   storyId: null,
   isInEditMode: false,
   actualContent: "",
+  isDescInEditMode: false,
+  actualDescContent: "",
   hasFetchedStory: false,
   overlayText: "Loading...",
   dirty: false
@@ -66,6 +76,28 @@ export default function(state = initialState, action) {
         ...state,
         isInEditMode: true
       };
+    case DESC_TYPE:
+      return {
+        ...state,
+        actualDescContent: action.payload
+      };
+    case DESC_EDIT_CANCEL:
+      return {
+        ...state,
+        actualDescContent: state.storyDescription,
+        isDescInEditMode: false
+      };
+    case DESC_UPDATED:
+      return {
+        ...state,
+        storyDescription: state.actualDescContent,
+        isDescInEditMode: false
+      };
+    case ACTIVATE_DESC_EDIT:
+      return {
+        ...state,
+        isDescInEditMode: true
+      };
     case UPDATE_OVERLAY:
       return {
         ...state,
@@ -79,9 +111,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         storyTitle: action.payload.title,
+        storyDescription: action.payload.description,
         storyId: action.payload.id,
         editorState: storyContent,
         actualContent: action.payload.title,
+        actualDescContent: action.payload.description,
         hasFetchedStory: true
       };
     case STORY_CONTENT_SAVED:

@@ -8,13 +8,22 @@ const AUTOSAVE_TIME_MS = 500;
 export const UPDATE_EDITOR_CONTENT = "EDITOR_UPDATE_EDITOR_CONTENT";
 export const LOADING_UPDATE = "EDITOR_LOADING_UPDATE";
 export const SUGGESTION_RECEIVED = "EDITOR_SUGGESTION_RECEIVED";
+
 export const TITLE_EDIT_CANCEL = "EDITOR_TITLE_EDIT_CANCEL";
 export const TITLE_UPDATED = "EDITOR_TITLE_UPDATED";
 export const TITLE_TYPE = "EDITOR_TITLE_TYPE";
 export const ACTIVATE_TITLE_EDIT = "EDITOR_ACTIVATE_TITLE_EDIT";
+
+export const DESC_EDIT_CANCEL = "EDITOR_DESC_EDIT_CANCEL";
+export const DESC_UPDATED = "EDITOR_DESC_UPDATED";
+export const DESC_TYPE = "EDITOR_DESC_TYPE";
+export const ACTIVATE_DESC_EDIT = "EDITOR_ACTIVATE_DESC_EDIT";
+
+
 export const UPDATE_OVERLAY = "EDITOR_UPDATE_OVERLAY";
 export const STORY_FETCHED = "EDITOR_STORY_FETCHED";
 export const STORY_CONTENT_SAVED = "EDITOR_STORY_CONTENT_SAVED";
+
 
 export const updateTitle = storyId => title => (dispatch, getState) => {
   axios
@@ -42,6 +51,35 @@ export const typeTitle = value => dispatch => {
 export const activateTitle = () => dispatch => {
   dispatch({
     type: ACTIVATE_TITLE_EDIT
+  });
+};
+
+export const updateDesc = storyId => desc => (dispatch, getState) => {
+  axios
+    .patch(`/api/stories/${storyId}/`, { description: desc }, tokenConfig(getState))
+    .then(() => {
+        dispatch({
+        type: DESC_UPDATED
+      });
+    });
+};
+
+export const cancelDesc = () => dispatch => {
+  dispatch({
+    type: DESC_EDIT_CANCEL
+  });
+};
+
+export const typeDesc = value => dispatch => {
+  dispatch({
+    type: DESC_TYPE,
+    payload: value.target.value
+  });
+};
+
+export const activateDesc = () => dispatch => {
+  dispatch({
+    type: ACTIVATE_DESC_EDIT
   });
 };
 

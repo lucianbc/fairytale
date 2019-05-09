@@ -1,10 +1,6 @@
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
-import {
-  HashRouter as Router,
-  Route,
-  Switch
-} from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
@@ -18,8 +14,8 @@ import PrivateRoute from "./common/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
-import FairyEditor from './editor';
-import HomePage from './homepage';
+import FairyEditor from "./editor";
+import HomePage from "./homepage";
 
 // Alert Options
 const alertOptions = {
@@ -40,12 +36,16 @@ class App extends Component {
             <Fragment>
               <Header />
               <Alerts />
-              <div className='container'>
+              <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={HomePage} />
-                  <PrivateRoute exact path="/story/:id/edit" component={FairyEditor} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} />
+                  <Route path="/register" component={Register} />
+                  <Route path="/login" component={Login} />
+                  <PrivateRoute
+                    exact
+                    path="/story/:id/edit"
+                    component={FairyEditor}
+                  />
+                  <PrivateRoute path="/" component={HomePage} />
                 </Switch>
               </div>
             </Fragment>
@@ -56,4 +56,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById("app"));
