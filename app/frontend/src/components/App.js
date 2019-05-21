@@ -43,7 +43,6 @@ class App extends Component {
           <Router>
             <Fragment>
               <Header />
-              <Sidemenu />
               <Alerts />
               <div className='container'>
                 <Switch>

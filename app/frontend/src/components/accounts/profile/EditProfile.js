@@ -29,23 +29,7 @@ export class EditProfile extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        this.resetState(nextProps);
-    }
-
-    resetState(props) {
-        this.setState({
-            bio: props.user.profile.bio,
-            location: props.user.profile.location,
-            avatar: props.user.profile.avatar,
-            birthDate: props.user.profile.birthDate,
-            first_name: props.user.first_name,
-            last_name: props.user.last_name,
-            username: props.user.username,
-            email: props.user.email,
-            initialAvatar: props.user.profile.avatar,
-            password: "",
-            confirmPassword: ""
-        });
+        this.props.history.push('/profile');
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -91,6 +75,8 @@ export class EditProfile extends Component {
             this.props.updateProfile(updatedUserProfile, 0);
         else
             this.props.updateProfile(updatedUserProfile, 1);
+
+
 
     }
 

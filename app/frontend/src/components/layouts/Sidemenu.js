@@ -1,93 +1,121 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import $ from 'jquery';
-import "./Sidemenu.css"
+import $ from "jquery"
+import "./sidemenu.css";
 
 export class Sidemenu extends Component {
-
-    componentDidMount() {
-
-        var trigger = $('.hamburger'),
-            overlay = $('.overlay'),
-            isClosed = false;
-
-        trigger.click(function () {
-            hamburger_cross();
-        });
-
-        function hamburger_cross() {
-
-            if (isClosed == true) {
-                overlay.hide();
-                trigger.removeClass('is-open');
-                trigger.addClass('is-closed');
-                isClosed = false;
-            } else {
-                overlay.show();
-                trigger.removeClass('is-closed');
-                trigger.addClass('is-open');
-                isClosed = true;
-            }
-        }
-
-        $('[data-toggle="offcanvas"]').click(function () {
-            $('#wrapper').toggleClass('toggled');
-        });
-
-    }
 
     static propTypes = {
         auth: PropTypes.object.isRequired
     };
 
+    componentDidMount() {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    }
+
     render() {
         const { isAuthenticated, user } = this.props.auth;
         if (isAuthenticated) {
             return (
-                <div id="wrapper">
-                    <div className="overlay"></div>
-                    <nav className="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-                        <ul className="nav sidebar-nav">
-                            <li className="sidebar-brand">
-                                <a href="#">
-                                    Brand
-                            </a>
-                            </li>
-                            <li>
-                                <a href="#">Home</a>
+
+                <div class="wrapper">
+                    <nav id="sidebar">
+                        <div class="sidebar-header">
+                            <h3>Bootstrap Sidebar</h3>
+                        </div>
+
+                        <ul class="list-unstyled components">
+                            <p>Dummy Heading</p>
+                            <li class="active">
+                                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                                <ul class="collapse list-unstyled" id="homeSubmenu">
+                                    <li>
+                                        <a href="#">Home 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Home 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Home 3</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#">About</a>
                             </li>
                             <li>
-                                <a href="#">Events</a>
-                            </li>
-                            <li>
-                                <a href="#">Team</a>
-                            </li>
-                            <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown">Works <span className="caret"></span></a>
-                                <ul className="dropdown-menu" role="menu">
-                                    <li className="dropdown-header">Dropdown heading</li>
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
+                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                                <ul class="collapse list-unstyled" id="pageSubmenu">
+                                    <li>
+                                        <a href="#">Page 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Page 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Page 3</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#">Services</a>
+                                <a href="#">Portfolio</a>
                             </li>
                             <li>
                                 <a href="#">Contact</a>
                             </li>
+                        </ul>
+
+                        <ul class="list-unstyled CTAs">
                             <li>
-                                <a href="https://twitter.com/maridlcrmn">Follow me</a>
+                                <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                            </li>
+                            <li>
+                                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
                             </li>
                         </ul>
                     </nav>
+
+                    <div id="content">
+
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+
+                                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                                    <i class="fas fa-align-left"></i>
+                                    <span>Toggle Sidebar</span>
+                                </button>
+                                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <i class="fas fa-align-justify"></i>
+                                </button>
+
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="nav navbar-nav ml-auto">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="#">Page</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Page</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Page</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Page</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             )
         }
