@@ -5,7 +5,12 @@ import {
   cancelTitle,
   updateTitle,
   typeTitle,
-  activateTitle
+  activateTitle,
+  
+  cancelDesc,
+  updateDesc,
+  typeDesc,
+  activateDesc,
 } from "../../actions/editor";
 
 const myInput = ({
@@ -15,9 +20,10 @@ const myInput = ({
   onType,
   onSave,
   onCancel,
-  activate
+  activate,
+  className
 }) => (
-  <div className="d-flex">
+  <div className={"d-flex " + className}>
     <div className="w-100" onClick={activate}>
       <input
         type="text"
@@ -45,7 +51,7 @@ const myInput = ({
   </div>
 );
 
-const mapStateToProps = (state, ownProps) => {
+const mapTitleStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
     content: state.editor.actualContent,
@@ -53,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapTitleDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators({
     onType: typeTitle,
     onCancel: cancelTitle,
@@ -62,7 +68,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export const TitleField = connect(
+  mapTitleStateToProps,
+  mapTitleDispatchToProps
+)(myInput);
+
+const mapDescStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    content: state.editor.actualDescContent,
+    isInEditMode: state.editor.isDescInEditMode
+  };
+};
+
+const mapDescDispatchToProps = (dispatch, ownProps) => {
+  return bindActionCreators({
+    onType: typeDesc,
+    onCancel: cancelDesc,
+    onSave: updateDesc(ownProps.id),
+    activate: activateDesc
+  }, dispatch);
+};
+
+export const DescriptionField = connect(
+  mapDescStateToProps,
+  mapDescDispatchToProps
 )(myInput);

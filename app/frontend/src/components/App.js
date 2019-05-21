@@ -20,8 +20,8 @@ import ShowProfile from "./accounts/profile/ShowProfile";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
-import FairyEditor from './editor';
-import HomePage from './homepage';
+import FairyEditor from "./editor";
+import HomePage from "./homepage";
 
 // Alert Options
 const alertOptions = {
@@ -44,14 +44,18 @@ class App extends Component {
             <Fragment>
               <Header />
               <Alerts />
-              <div className='container'>
+              <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={HomePage} />
-                  <PrivateRoute exact path="/story/:id/edit" component={FairyEditor} />
+                  <Route path="/register" component={Register} />
+                  <Route path="/login" component={Login} />
+                  <PrivateRoute
+                    exact
+                    path="/story/:id/edit"
+                    component={FairyEditor}
+                  />
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
                   <PrivateRoute exact path="/editProfile" component={EditProfile} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} />
+                  <PrivateRoute path="/" component={HomePage} />
                 </Switch>
               </div>
             </Fragment>
@@ -62,4 +66,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById("app"));
