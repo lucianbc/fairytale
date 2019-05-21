@@ -23,6 +23,9 @@ export class Alerts extends Component {
 
         if (message !== prevProps.message) {
             if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
+            if (message.updateSuccessfull) alert.success(message.updateSuccessfull);
+            if (message.onlyLetters) alert.error(message.onlyLetters);
+            if (message.passwordChanged) alert.success(message.passwordChanged);
         }
     }
 

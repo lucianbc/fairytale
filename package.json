@@ -26,6 +26,8 @@
     "axios": "^0.18.0",
     "draft-js": "^0.10.5",
     "draft-js-plugins-editor": "^2.1.1",
+    "form-data": "^2.3.3",
+    "jquery": "^3.4.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
