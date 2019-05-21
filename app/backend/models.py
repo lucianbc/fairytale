@@ -13,4 +13,4 @@ class Story(models.Model):
                                null=True)
     creationDate = models.DateTimeField(auto_now_add=True)
     lastEditDate = models.DateTimeField(auto_now=True)
-    published =  models.BooleanField(default=False)
+    published = models.BooleanField(default=False)
