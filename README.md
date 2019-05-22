@@ -1,5 +1,7 @@
 # Fairytale Gone Bad (WIP)
-[![Build Status](https://travis-ci.org/lucianbc/fairytale.svg?branch=master)](https://travis-ci.org/lucianbc/fairytale)
+[![Build Status]
+
+(https://travis-ci.org/lucianbc/fairytale.svg?branch=master)](https://travis-ci.org/lucianbc/fairytale)
 Blogging and creative writing with a touch of AI.
 
 This is a university project developed for the Software Engineering Course at the University of Bucharest.
