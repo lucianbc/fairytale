@@ -1,6 +1,6 @@
 import InputPane from "./inputPane";
 import SuggestionPane from "./suggestionPane";
-import Input from "./inputField";
+import { TitleField, DescriptionField } from "./inputField";
 import React from "react";
 import { connect } from "react-redux";
 import { fetchStory } from "../../actions/editor";
@@ -25,7 +25,8 @@ class editorScreen extends React.Component {
         <div className={(this.props.showOverlay ? "invisible" : "visible")}>
           <div className="row mb-2">
             <div className="col-md-12">
-              <Input placeholder="Title" id={this.props.storyId}/>
+              <TitleField className="mb-2" placeholder="Title" id={this.props.storyId}/>
+              <DescriptionField className="mb-2" placeholder="Description" id={this.props.storyId}/>
             </div>
           </div>
           <div className="row">

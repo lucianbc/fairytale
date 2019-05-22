@@ -1,12 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import UserStoriesPage from "../stories/userStoriesPage";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 
-export default () => (
-    <div>
-        <h1>Hello, user!</h1>
-        <p>This is the home page</p>
-        <Link to="story/5/edit">Go to editor</Link><br />
-        <Link to="profile">Go to profile</Link>
-    </div>
+export default ({match}) => (
+  <div>
+    <h1>Hello, user!</h1>
+    <UserStoriesPage />
+  </div>
 );

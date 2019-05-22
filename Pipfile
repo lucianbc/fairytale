@@ -13,6 +13,7 @@ django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 django-livereload-server = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
