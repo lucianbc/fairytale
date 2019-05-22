@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import {
-  HashRouter as Router,
+  //HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Switch
 } from "react-router-dom";
@@ -32,7 +33,8 @@ const alertOptions = {
 };
 
 class App extends Component {
-  componentDidMount() {
+
+  componentWillMount() {
     store.dispatch(loadUser());
   }
 
@@ -40,7 +42,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router>
+          <Router basename="/">
             <Fragment>
               <Header />
               <Alerts />

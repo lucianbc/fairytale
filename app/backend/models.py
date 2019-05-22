@@ -13,3 +13,28 @@ class Story(models.Model):
                                null=True)
     creationDate = models.DateTimeField(auto_now_add=True)
     lastEditDate = models.DateTimeField(auto_now=True)
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(User,
+                             related_name="following",
+                             on_delete=models.CASCADE,
+                             )
+    following = models.ForeignKey(User,
+                                  related_name="followed_by",
+                                  on_delete=models.CASCADE,
+                                  )
+    startDate = models.DateTimeField(auto_now_add=True)
+
+
+class FollowInvite(models.Model):
+
+    user = models.ForeignKey(User,
+                             related_name="inviting",
+                             on_delete=models.CASCADE,
+                             )
+    inviting = models.ForeignKey(User,
+                                 related_name="invited_by",
+                                 on_delete=models.CASCADE,
+                                 )
+    inviteDate = models.DateTimeField(auto_now_add=True)

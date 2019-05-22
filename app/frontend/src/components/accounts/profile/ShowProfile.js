@@ -16,7 +16,7 @@ export class ShowProfile extends Component {
         email: this.props.user.email,
     };
 
-    static propTyoes = {
+    static propTypes = {
         user: PropTypes.object.isRequired
     }
 
