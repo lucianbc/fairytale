@@ -43,7 +43,7 @@ export class ShowProfile extends Component {
                                             <h2 className="d-block" style={{ fontSize: "1.5rem", fontWeight: "bold" }}> {username}</h2>
                                             <h6 className="d-block"><span style={{ color: "blue" }}>1500 </span>Stories</h6>
                                             <h6 className="d-block"><span style={{ color: "blue" }}>300 </span>Published stories</h6>
-                                            <h6 className="d-block"><span style={{ color: "blue" }}>500 </span>Friends</h6>
+                                            <h6 className="d-block"><span style={{ color: "blue" }}><Link to="/following">500</Link></span>Following</h6>
                                         </div>
                                     </div>
                                 </div>

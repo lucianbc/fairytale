@@ -18,6 +18,7 @@ import Register from "./accounts/Register";
 import PrivateRoute from "./common/PrivateRoute";
 import EditProfile from "./accounts/profile/EditProfile";
 import ShowProfile from "./accounts/profile/ShowProfile";
+import Following from "./accounts/profile/Following"
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
@@ -57,6 +58,7 @@ class App extends Component {
                   />
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
                   <PrivateRoute exact path="/editProfile" component={EditProfile} />
+                  <PrivateRoute exact path="/following" component={Following} />
                   <PrivateRoute path="/" component={HomePage} />
                 </Switch>
               </div>
