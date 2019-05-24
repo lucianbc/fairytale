@@ -72,3 +72,20 @@ class FollowInviteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class FeedViewSet(viewsets.GenericViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = StorySerializer
+
+    def get_queryset(self):
+        stories = []
+        followers = self.request.user.following.all()
+        for follower in followers:
+            stories.append(follower.stories.all())
+        return stories
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

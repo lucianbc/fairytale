@@ -1,7 +1,7 @@
 {
   "name": "fairytale",
   "version": "1.0.0",
-  "description": "",
+  "description": "Blogging and creative writing with a touch of AI.",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development --watch ./app/frontend/src/index.js --output ./app/frontend/static/frontend/main.js",
@@ -11,16 +11,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.5",
+    "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "css-loader": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "webpack": "^4.32.1",
+    "webpack-cli": "^3.3.2"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -30,15 +30,23 @@
     "jquery": "^3.4.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
-    "react": "^16.8.5",
+    "react": "^16.8.6",
     "react-alert": "^5.4.0",
     "react-alert-template-basic": "^1.0.0",
-    "react-dom": "^16.8.5",
+    "react-dom": "^16.8.6",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^2.8.0",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucianbc/fairytale.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lucianbc/fairytale/issues"
+  },
+  "homepage": "https://github.com/lucianbc/fairytale#readme"
 }
