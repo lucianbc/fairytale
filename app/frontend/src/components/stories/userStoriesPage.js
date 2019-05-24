@@ -107,7 +107,7 @@ const StoriesView = (stories, deleteStoryAction) => () => {
         {stories.map((story, i) => (
           <StoryCard
             story={story}
-            to={`story/${story.id}/edit`}
+            to={`/story/${story.id}/edit`}
             linkText="Edit story"
             key={i}
             deleteAction={deleteStoryAction ? () => deleteStoryAction(story.id) : null}
