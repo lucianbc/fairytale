@@ -13,7 +13,6 @@ export const newStory = () => (dispatch, getState) => {
     .post(`/api/stories/`, { title: "Story Title" }, tokenConfig(getState))
     .then((response) => {
       const newStoryId = response.data.id;
-      debugger;
       navigate(`/story/${newStoryId}/edit`)
     })
 }
@@ -21,17 +20,22 @@ export const newStory = () => (dispatch, getState) => {
 export const deleteStory = (storyId) => (dispatch, getState) => {
 
   axios
-    .delete(`/api/stories/${storyId}`, tokenConfig(getState))
-    .then(dispatch({
-      type: STORY_DELETED,
-      payload: storyId
-    }))
+    .delete(`/api/stories/${storyId}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch({
+        type: STORY_DELETED,
+        payload: storyId
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 export const loadStories = () => (dispatch, getState) => {
   dispatch(overlayChange("Loading..."));
   axios
-    .get("/api/stories", tokenConfig(getState))
+    .get("/api/stories/", tokenConfig(getState))
     .then(response => {
       const extractedData = response.data.map(s => ({
         id: s.id,

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import {
   //HashRouter as Router,
-  BrowserRouter as Router,
+  Router as Router,
   Route,
   Switch
 } from "react-router-dom";
@@ -24,6 +24,9 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import FairyEditor from "./editor";
 import HomePage from "./homepage";
+import UserStoriesPage from "./stories/userStoriesPage";
+import history from "../actions/navigate";
+
 
 // Alert Options
 const alertOptions = {
@@ -43,7 +46,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router basename="/">
+          <Router basename="/" history={history}>
             <Fragment>
               <Header />
               <Alerts />
@@ -59,6 +62,7 @@ class App extends Component {
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
                   <PrivateRoute exact path="/editProfile" component={EditProfile} />
                   <PrivateRoute exact path="/following" component={Following} />
+                  <PrivateRoute path="/me/stories" component={UserStoriesPage} />
                   <PrivateRoute path="/" component={HomePage} />
                 </Switch>
               </div>
