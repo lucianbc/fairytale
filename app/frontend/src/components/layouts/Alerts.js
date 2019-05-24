@@ -26,6 +26,9 @@ export class Alerts extends Component {
             if (message.updateSuccessfull) alert.success(message.updateSuccessfull);
             if (message.onlyLetters) alert.error(message.onlyLetters);
             if (message.passwordChanged) alert.success(message.passwordChanged);
+            if (message.deleteFollower) alert.success(message.deleteFollower)
+            if (message.invitationSent) alert.success(message.invitationSent)
+            if (message.deleteInvite) alert.success(message.deleteInvite)
         }
     }
 

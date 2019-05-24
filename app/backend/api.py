@@ -1,10 +1,13 @@
 from backend.models import Story, Follow, FollowInvite
 from rest_framework import viewsets, permissions
-from .serializers import StorySerializer, FollowSerializer, FollowInviteSerializer
+from .serializers import StorySerializer, FollowSerializer, FollowSerializerForAdd, FollowInviteSerializer, FollowInviteSerializerForAdd
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
+from accounts.serializers import UserSerializer
+from rest_framework.decorators import list_route
+import rest_framework.renderers as renderers
 
 # Story Viewset
 
@@ -31,10 +34,16 @@ class FollowViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated
     ]
 
-    serializer_class = FollowSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return FollowSerializer
+
+        return FollowSerializerForAdd
 
     def get_queryset(self):
-        return self.request.user.following.all()
+
+        follow_relations = self.request.user.following.all()
+        return follow_relations
 
     def create(self, request, *args, **kwargs):
 
@@ -43,11 +52,6 @@ class FollowViewSet(viewsets.ModelViewSet):
             following = User.objects.get(username=username).id
         except ObjectDoesNotExist:
             return Response({"error": "Invalid username"}, status=status.HTTP_404_NOT_FOUND)
-
-        user = request.user
-        invalid = user.following.all().filter(following=following)
-        if invalid:
-            return Response({"error": "Already following " + invalid[0].following.username}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = self.get_serializer(data={"following": following})
         serializer.is_valid(raise_exception=True)
@@ -65,10 +69,46 @@ class FollowInviteViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated
     ]
 
-    serializer_class = FollowInviteSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return FollowInviteSerializer
+        return FollowInviteSerializerForAdd
+
+    @list_route(renderer_classes=[renderers.JSONRenderer])
+    def myInvites(self, request, *args, **kwargs):
+
+        try:
+            invites = FollowInvite.objects.get(inviting=self.request.user)
+            jsonArray = [FollowInviteSerializer(invites).data]
+            return Response(jsonArray)
+        except ObjectDoesNotExist:
+            return Response([])
 
     def get_queryset(self):
         return self.request.user.inviting.all()
 
+    def create(self, request, *args, **kwargs):
+
+        username = request.data.get("invitedUsername")
+        try:
+            inviting = User.objects.get(username=username).id
+        except ObjectDoesNotExist:
+            return Response({"error": "Invalid username"}, status=status.HTTP_404_NOT_FOUND)
+
+        user = request.user
+        invalid = user.inviting.all().filter(inviting=inviting)
+        if invalid:
+            return Response({"error": " " + invalid[0].inviting.username + " is already invited!"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.get_serializer(
+            data={"inviting": inviting, "user": user.id})
+        serializer.is_valid(raise_exception=True)
+
+        # self.perform_create(serializer)
+        currentInvite = serializer.save()
+        headers = self.get_success_headers(serializer.data)
+
+        return Response(FollowInviteSerializer(currentInvite).data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
