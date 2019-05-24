@@ -1,0 +1,9 @@
+#profileCard[aria-expanded="true"] {
+  background: inherit
+}
+
+#profileCard::after {
+  display: inline-block;
+  position: initial;
+  transform: initial;
+}

@@ -5,8 +5,15 @@ import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { searchUser } from "../../actions/userPage"
 
+import { NavDropdown } from "react-bootstrap";
+import "./header.css";
+import { newStory } from "../../actions/userStories";
 
 export class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   static propTypes = {
     auth: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
@@ -26,26 +33,31 @@ export class Header extends Component {
     this.props.searchUser(username);
   }
 
+  profileCard = (user) => (
+    <NavDropdown title={user ? `Welcome, ${user.username}` : ""} id="profileCard">
+      <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+      <NavDropdown.Divider />
+      <NavDropdown.Item href="/me/stories/drafts">Stories</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => { this.props.newStory() }}>New Story</NavDropdown.Item>
+      <NavDropdown.Divider />
+      <div>
+        <button
+          onClick={this.props.logout}
+          className="nav-link btn btn-info w-100 text-light">
+          Log Out
+          </button>
+      </div>
+    </NavDropdown>
+  )
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const { username } = this.state;
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <span className="navbar-text mr-3">
-          <Link to="/profile">
-            {user ? `Welcome, ${user.username}` : ""}
-          </Link>
-        </span>
-        <li className="nav-item">
-          <button
-            onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
+      <div className="navbar-nav ml-auto mt-2 mt-lg-0">
+        {this.profileCard(user)}
+      </div>
     );
 
     const guestLinks = (
@@ -80,7 +92,7 @@ export class Header extends Component {
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-light mb-2">
         <div className="container">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             Fairytale Gone Bad
           </a>
           {isAuthenticated ? searchForm : <div></div>}
@@ -110,5 +122,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout, searchUser }
+  { logout, searchUser, newStory }
 )(Header);

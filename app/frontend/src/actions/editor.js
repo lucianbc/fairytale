@@ -108,7 +108,7 @@ export const fetchStory = (id) => (dispatch, getState) => {
     payload: "Loading..."
   });
   axios
-    .get("/api/stories/" + id, tokenConfig(getState))
+    .get(`/api/stories/${id}/`, tokenConfig(getState))
     .then(response => {
       dispatch({
         type: STORY_FETCHED,
@@ -116,6 +116,7 @@ export const fetchStory = (id) => (dispatch, getState) => {
       });
     })
     .catch(err => {
+      console.error(err);
       dispatch({
         type: UPDATE_OVERLAY,
         payload: err.message

@@ -33,6 +33,7 @@
     "react": "^16.8.5",
     "react-alert": "^5.4.0",
     "react-alert-template-basic": "^1.0.0",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.5",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
