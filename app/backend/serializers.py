@@ -40,3 +40,10 @@ class FollowInviteSerializerForAdd(serializers.ModelSerializer):
     class Meta:
         model = FollowInvite
         fields = '__all__'
+
+
+class Example(serializers.ModelSerializer):
+
+    class Meta:
+        model = FollowInvite
+        fields = ('id',)

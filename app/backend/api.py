@@ -1,6 +1,6 @@
 from backend.models import Story, Follow, FollowInvite
 from rest_framework import viewsets, permissions
-from .serializers import StorySerializer, FollowSerializer, FollowSerializerForAdd, FollowInviteSerializer, FollowInviteSerializerForAdd
+from .serializers import StorySerializer, FollowSerializer, FollowSerializerForAdd, FollowInviteSerializer, FollowInviteSerializerForAdd, Example
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
@@ -78,8 +78,10 @@ class FollowInviteViewSet(viewsets.ModelViewSet):
     def myInvites(self, request, *args, **kwargs):
 
         try:
-            invites = FollowInvite.objects.get(inviting=self.request.user)
-            jsonArray = [FollowInviteSerializer(invites).data]
+            jsonArray = []
+            invites = FollowInvite.objects.all().filter(inviting=self.request.user)
+            for invite in invites:
+                jsonArray.append(FollowInviteSerializer(invite).data)
             return Response(jsonArray)
         except ObjectDoesNotExist:
             return Response([])
