@@ -8,12 +8,7 @@ import PropTypes from "prop-types";
 export default ({ match }) => (
   <div>
     <h1>Hello, user!</h1>
-<<<<<<< HEAD
     //
     <followStories />
-=======
-    <Link to="/profile"> Go to profile</Link>
-    <UserStoriesPage />
->>>>>>> 5867123281bd96492aede2e418259c89b8511eb6
   </div>
 );
