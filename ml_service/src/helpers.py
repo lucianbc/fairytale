@@ -2,13 +2,6 @@ import json
 import tensorflow as tf
 import numpy as np
 
-if tf.test.is_gpu_available():
-    rnn = tf.keras.layers.CuDNNGRU
-else:
-    import functools
-    rnn = functools.partial(tf.keras.layers.GRU, recurrent_activation='sigmoid', reset_after=True)
-
-
 RNN_UNITS = 1024
 EMBEDDING_DIM = 265
 
@@ -18,12 +11,12 @@ SENTENCE_SEPARATORS = '\n.'
 
 def build_model(vocab_size, batch_size):
     model = tf.keras.Sequential([
-        tf.keras.layers.Embedding(vocab_size, EMBEDDING_DIM, batch_input_shape=[batch_size, None]),
-        rnn(RNN_UNITS,
-            return_sequences=True,
-            recurrent_initializer='glorot_uniform',
-            stateful=True
-        ),
+        tf.keras.layers.Embedding(vocab_size, EMBEDDING_DIM,
+                                  batch_input_shape=[batch_size, None]),
+        tf.keras.layers.LSTM(RNN_UNITS,
+                             return_sequences=True,
+                             stateful=True,
+                             recurrent_initializer='glorot_uniform'),
         tf.keras.layers.Dense(vocab_size)
     ])
     return model
@@ -31,14 +24,14 @@ def build_model(vocab_size, batch_size):
 
 def load_encoding(enc_file):
     with open(enc_file) as file:
-        char2idx = json.load(file)
-    return char2idx
+        vocab = json.load(file)
+    return vocab
 
 
 class Model:
     def __init__(self, encoding_file, weights_file):
-        self.char2idx = load_encoding(encoding_file)
-        self.vocab = sorted(list(self.char2idx.keys()))
+        self.vocab = load_encoding(encoding_file)
+        self.char2idx = {u:i for i, u in enumerate(self.vocab)}
         self.idx2char = np.array(self.vocab)
         self.weights_file = weights_file
 
@@ -60,9 +53,16 @@ class Model:
                 break
 
             predictions = model(input_eval)
+
+            # remove the batch dimension
             predictions = tf.squeeze(predictions, 0)
+
+            # using a multinomial distribution to predict the word returned by the model
             predictions = predictions / temperature
             predicted_id = tf.multinomial(predictions, num_samples=1)[-1, 0].numpy()
+
+            # We pass the predicted word as the next input to the model
+            # along with the previous hidden state
             input_eval = tf.expand_dims([predicted_id], 0)
             crt_char = self.idx2char[predicted_id]
             text_generated.append(crt_char)

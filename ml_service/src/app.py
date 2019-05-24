@@ -5,7 +5,9 @@ import ml_service.src.models as model_defs
 tf.enable_eager_execution()
 
 model_classes = [
-    model_defs.CharlesKingsley
+    model_defs.Horror,
+    model_defs.Mystery,
+    model_defs.Adventure
 ]
 
 models = dict()
