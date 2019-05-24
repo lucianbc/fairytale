@@ -18,6 +18,7 @@ import Register from "./accounts/Register";
 import PrivateRoute from "./common/PrivateRoute";
 import EditProfile from "./accounts/profile/EditProfile";
 import ShowProfile from "./accounts/profile/ShowProfile";
+import Following from "./accounts/profile/Following"
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
@@ -56,6 +57,7 @@ class App extends Component {
                     component={FairyEditor}
                   />
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
+<<<<<<< HEAD
                   <PrivateRoute
                     exact
                     path="/editProfile"
@@ -63,6 +65,11 @@ class App extends Component {
                   />
                   <PrivateRoute path="/" component={followStories} />
                   {/* <PrivateRoute path="/" component={HomePage} /> */}
+=======
+                  <PrivateRoute exact path="/editProfile" component={EditProfile} />
+                  <PrivateRoute exact path="/following" component={Following} />
+                  <PrivateRoute path="/" component={HomePage} />
+>>>>>>> 5867123281bd96492aede2e418259c89b8511eb6
                 </Switch>
               </div>
             </Fragment>

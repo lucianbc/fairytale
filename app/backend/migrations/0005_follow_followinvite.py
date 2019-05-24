@@ -16,19 +16,25 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FollowInvite',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('inviteDate', models.DateTimeField(auto_now_add=True)),
-                ('inviting', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='invited_by', to=settings.AUTH_USER_MODEL)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='inviting', to=settings.AUTH_USER_MODEL)),
+                ('inviting', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                               related_name='invited_by', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                           related_name='inviting', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Follow',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('startDate', models.DateTimeField(auto_now_add=True)),
-                ('following', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='followed_by', to=settings.AUTH_USER_MODEL)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='following', to=settings.AUTH_USER_MODEL)),
+                ('following', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                                related_name='followed_by', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                           related_name='following', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
