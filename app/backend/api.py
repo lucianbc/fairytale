@@ -2,6 +2,7 @@ from backend.models import Story, Follow, FollowInvite
 from rest_framework import viewsets, permissions
 from .serializers import StorySerializer, FollowSerializer, FollowInviteSerializer
 from django.contrib.auth.models import User
+from .models import Story
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
@@ -49,7 +50,8 @@ class FollowViewSet(viewsets.ModelViewSet):
         if invalid:
             return Response({"error": "Already following " + invalid[0].following.username}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = self.get_serializer(data={"following": following})
+        serializer = self.get_serializer(
+            data={"following": following, "user": request.user.id})
         serializer.is_valid(raise_exception=True)
 
         self.perform_create(serializer)
@@ -74,17 +76,19 @@ class FollowInviteViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class FeedViewSet(viewsets.GenericViewSet):
+class FeedViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated
     ]
     serializer_class = StorySerializer
+    #serializer_class = FollowSerializer
 
     def get_queryset(self):
-        stories = []
+        stories = Story.objects.none()
         followers = self.request.user.following.all()
         for follower in followers:
-            stories.append(follower.stories.all())
+            userFollowed = follower.following
+            stories = stories | userFollowed.stories.all()
         return stories
 
     def perform_create(self, serializer):

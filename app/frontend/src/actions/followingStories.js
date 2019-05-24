@@ -4,12 +4,24 @@ import { tokenConfig } from "./auth";
 
 //FOLLOWING STORIES
 export const getFollowingStories = () => (dispatch, getState) => {
-  debugger;
   axios
-    .get("/api/stories/", tokenConfig(getState))
+    .get("/api/feed/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: FOLLOWING_STORIES,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+//FOLLOWING USERS
+export const getFollowingUsers = () => (dispatch, getState) => {
+  axios
+    .get("/api/follows/", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: FOLLOWING_USERS,
         payload: res.data
       });
     })
