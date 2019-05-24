@@ -25,6 +25,7 @@ import { loadUser } from "../actions/auth";
 import FairyEditor from "./editor";
 import HomePage from "./homepage";
 import UserStoriesPage from "./stories/userStoriesPage";
+import history from "../actions/navigate";
 
 
 // Alert Options
@@ -45,7 +46,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router basename="/">
+          <Router basename="/" history={history}>
             <Fragment>
               <Header />
               <Alerts />

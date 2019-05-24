@@ -16,7 +16,6 @@ class UserStoriesPage extends Component {
 
   storiesView = () => {
     const { stories, match, newStory, deleteStory } = this.props;
-    // debugger;
     const { url } = match;
     const tab = window.location.href.match(/([^\/]*)\/*$/)[1]
     return (
