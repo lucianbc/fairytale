@@ -1,4 +1,6 @@
 # Fairytale Gone Bad (WIP)
+[![Build Status](https://travis-ci.org/lucianbc/fairytale.svg?branch=master)](https://travis-ci.org/lucianbc/fairytale)
+
 
 Blogging and creative writing with a touch of AI.
 

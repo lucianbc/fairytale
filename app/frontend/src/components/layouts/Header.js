@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 
+
 export class Header extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -16,7 +17,9 @@ export class Header extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
         <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome ${user.username}` : ""}</strong>
+            <Link to="/profile">
+              {user ? `Welcome, ${user.username}` : ""}
+            </Link>
         </span>
         <li className="nav-item">
           <button

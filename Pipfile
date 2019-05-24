@@ -16,6 +16,7 @@ django-livereload-server = "*"
 tensorflow = "==1.13.1"
 numpy = "*"
 flask = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,0 +1,19 @@
+language: python
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
+install:
+  - 'pip install pipenv'
+  - 'pipenv install'
+  - 'npm install'
+
+script:
+  - 'npm run build'
+  - 'python ./app/manage.py makemigrations'
+  - 'python ./app/manage.py migrate'
+
+branches:
+  only: 
+    - master

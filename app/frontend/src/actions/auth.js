@@ -1,5 +1,6 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
+import { returnErrors, createMessage } from "./messages";
+import FormData from "form-data";
 
 import {
     USER_LOADED,
@@ -9,7 +10,11 @@ import {
     LOGIN_FAILED,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAILED
+    REGISTER_FAILED,
+    PROFILE_UPDATE_FAIL,
+    PROFILE_UPDATE_SUCCESS,
+    PASSWORD_CHANGED,
+    PASSWORD_CHANGE_FAIL
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -122,3 +127,69 @@ export const tokenConfig = getState => {
 
     return config;
 };
+
+export const updateProfile = ({ username, email, first_name, last_name, profile }, flag) => (dispatch, getState) => {
+
+    const token = getState().auth.token;
+    let data = new FormData();
+
+    data.append("username", username);
+    data.append("email", email);
+    data.append("first_name", first_name);
+    data.append("last_name", last_name);
+    if (flag)
+        data.append("profile.avatar", profile.avatar);
+    data.append("profile.location", profile.location);
+    data.append("profile.bio", profile.bio);
+    if (profile.birthDate)
+        data.append("profile.birthDate", profile.birthDate);
+    else data.append("profile.birthDate", "0001-01-01");
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    };
+    if (token) {
+        config.headers["Authorization"] = `Token ${token}`;
+    }
+
+    axios
+        .patch("/api/auth/user", data, config)
+        .then(res => {
+            dispatch(createMessage({ updateSuccessfull: "User profile was succesfully updated" }));
+            dispatch({
+                type: PROFILE_UPDATE_SUCCESS,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: PROFILE_UPDATE_FAIL
+            });
+        });
+}
+
+export const changePassword = password => (dispatch, getState) => {
+
+    const config = tokenConfig(getState);
+    const body = JSON.stringify({ password });
+
+    axios
+        .patch("/api/auth/user", body, config)
+        .then(res => {
+            dispatch(createMessage({ passwordChanged: "Password was reset. It will be updated after relogging." }));
+            dispatch({
+                type: PASSWORD_CHANGED,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: PASSWORD_CHANGE_FAIL
+            });
+        });
+}
+
+
