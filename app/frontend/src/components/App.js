@@ -24,6 +24,8 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import FairyEditor from "./editor";
 import HomePage from "./homepage";
+import UserStoriesPage from "./stories/userStoriesPage";
+
 
 // Alert Options
 const alertOptions = {
@@ -59,6 +61,7 @@ class App extends Component {
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
                   <PrivateRoute exact path="/editProfile" component={EditProfile} />
                   <PrivateRoute exact path="/following" component={Following} />
+                  <PrivateRoute path="/me/stories" component={UserStoriesPage} />
                   <PrivateRoute path="/" component={HomePage} />
                 </Switch>
               </div>

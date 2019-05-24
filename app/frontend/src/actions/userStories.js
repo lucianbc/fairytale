@@ -13,7 +13,6 @@ export const newStory = () => (dispatch, getState) => {
     .post(`/api/stories/`, { title: "Story Title" }, tokenConfig(getState))
     .then((response) => {
       const newStoryId = response.data.id;
-      debugger;
       navigate(`/story/${newStoryId}/edit`)
     })
 }

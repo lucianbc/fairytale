@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
-
+import { NavDropdown } from "react-bootstrap";
+import "./header.css";
 
 export class Header extends Component {
   static propTypes = {
@@ -11,25 +12,30 @@ export class Header extends Component {
     logout: PropTypes.func.isRequired
   };
 
+  profileCard = (user) => (
+    <NavDropdown title={user ? `Welcome, ${user.username}` : ""} id="profileCard">
+      <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+      <NavDropdown.Divider/>
+      <NavDropdown.Item href="/me/stories/drafts">Stories</NavDropdown.Item>
+      <NavDropdown.Item>New Story</NavDropdown.Item>
+      <NavDropdown.Divider/>
+      <div>
+        <button
+            onClick={this.props.logout}
+            className="nav-link btn btn-info w-100 text-light">
+              Log Out
+          </button>
+      </div>
+    </NavDropdown>  
+  )
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <span className="navbar-text mr-3">
-            <Link to="/profile">
-              {user ? `Welcome, ${user.username}` : ""}
-            </Link>
-        </span>
-        <li className="nav-item">
-          <button
-            onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
+      <div className="navbar-nav ml-auto mt-2 mt-lg-0">
+        { this.profileCard(user) }
+      </div>
     );
 
     const guestLinks = (
@@ -50,7 +56,7 @@ export class Header extends Component {
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-light mb-2">
         <div className="container">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             Fairytale Gone Bad
           </a>
           <button
