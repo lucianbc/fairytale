@@ -1,6 +1,9 @@
-import { createHashHistory } from "history";
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory();
+
+export default history;
 
 export const navigate = url => {
-  const history = createHashHistory();
   history.push(url);
 };
