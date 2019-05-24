@@ -5,8 +5,13 @@ import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { NavDropdown } from "react-bootstrap";
 import "./header.css";
+import { newStory } from "../../actions/userStories";
 
 export class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
+  
   static propTypes = {
     auth: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired
@@ -17,7 +22,7 @@ export class Header extends Component {
       <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
       <NavDropdown.Divider/>
       <NavDropdown.Item href="/me/stories/drafts">Stories</NavDropdown.Item>
-      <NavDropdown.Item>New Story</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => { this.props.newStory() }}>New Story</NavDropdown.Item>
       <NavDropdown.Divider/>
       <div>
         <button
@@ -85,5 +90,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout }
+  { logout, newStory }
 )(Header);
