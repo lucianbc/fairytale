@@ -13,7 +13,6 @@ export const searchUser = username => (dispatch, getState) => {
     axios
         .post("/api/stories/userStories/", body, tokenConfig(getState))
         .then(res => {
-            debugger
             dispatch({
                 type: USER_FOUND,
                 payload: res.data
