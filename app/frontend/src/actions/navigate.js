@@ -1,8 +1,9 @@
 import { createBrowserHistory } from "history";
 
-export default createBrowserHistory();
+const history = createBrowserHistory();
+
+export default history;
 
 export const navigate = url => {
-  const history = createBrowserHistory();
   history.push(url);
 };

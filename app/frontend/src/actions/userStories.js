@@ -35,7 +35,7 @@ export const deleteStory = (storyId) => (dispatch, getState) => {
 export const loadStories = () => (dispatch, getState) => {
   dispatch(overlayChange("Loading..."));
   axios
-    .get("/api/stories", tokenConfig(getState))
+    .get("/api/stories/", tokenConfig(getState))
     .then(response => {
       const extractedData = response.data.map(s => ({
         id: s.id,
