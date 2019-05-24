@@ -1,9 +1,8 @@
-import { GET_FOLLOWERS, DELETE_FOLLOWER, INVITE_FOLLOWER, CLEAR_FOLLOWERS, GET_INVITES, DELETE_INVITE, CLEAR_INVITES, GET_MY_INVITES } from "../actions/types.js";
+import { GET_FOLLOWERS, DELETE_FOLLOWER, INVITE_FOLLOWER, CLEAR_FOLLOWERS, GET_INVITES, DELETE_INVITE, CLEAR_INVITES, ADD_FOLLOWER } from "../actions/types.js";
 
 const initialState = {
     following: [],
     invites: [],
-    myInvites: []
 };
 
 export default function (state = initialState, action) {
@@ -13,6 +12,11 @@ export default function (state = initialState, action) {
                 ...state,
                 following: action.payload
             };
+        case ADD_FOLLOWER:
+            return {
+                ...state,
+                following: [...state.following, action.payload]
+            }
         case DELETE_FOLLOWER:
             return {
                 ...state,
@@ -42,11 +46,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 invites: []
-            }
-        case GET_MY_INVITES:
-            return {
-                ...state,
-                myInvites: action.payload
             }
         default:
             return state;

@@ -12,10 +12,11 @@ class StorySerializer(serializers.ModelSerializer):
 class FollowSerializer(serializers.ModelSerializer):
 
     following = UserSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = Follow
-        fields = ('id', 'following')
+        fields = ('id', 'user', 'following')
 
 
 class FollowSerializerForAdd(serializers.ModelSerializer):
@@ -40,10 +41,3 @@ class FollowInviteSerializerForAdd(serializers.ModelSerializer):
     class Meta:
         model = FollowInvite
         fields = '__all__'
-
-
-class Example(serializers.ModelSerializer):
-
-    class Meta:
-        model = FollowInvite
-        fields = ('id',)
