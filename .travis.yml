@@ -13,3 +13,7 @@ script:
   - 'npm run build'
   - 'python ./app/manage.py makemigrations'
   - 'python ./app/manage.py migrate'
+
+branches:
+  only: 
+    - master
