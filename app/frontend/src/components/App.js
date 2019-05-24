@@ -18,12 +18,13 @@ import Register from "./accounts/Register";
 import PrivateRoute from "./common/PrivateRoute";
 import EditProfile from "./accounts/profile/EditProfile";
 import ShowProfile from "./accounts/profile/ShowProfile";
-import Following from "./accounts/profile/Following"
+import Following from "./accounts/profile/Following";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 import FairyEditor from "./editor";
 import HomePage from "./homepage";
+import { followStories } from "./followingStories/followStories";
 
 // Alert Options
 const alertOptions = {
@@ -34,7 +35,6 @@ const alertOptions = {
 };
 
 class App extends Component {
-
   componentWillMount() {
     store.dispatch(loadUser());
   }
@@ -57,7 +57,11 @@ class App extends Component {
                     component={FairyEditor}
                   />
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
-                  <PrivateRoute exact path="/editProfile" component={EditProfile} />
+                  <PrivateRoute
+                    exact
+                    path="/editProfile"
+                    component={EditProfile}
+                  />
                   <PrivateRoute exact path="/following" component={Following} />
                   <PrivateRoute path="/" component={HomePage} />
                 </Switch>
