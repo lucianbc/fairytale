@@ -9,6 +9,8 @@ import {
     GET_INVITES,
     DELETE_INVITE,
     GET_MY_INVITES,
+    ADD_FOLLOWER,
+    GET_MY_FOLLOWERS,
 } from "./types";
 
 // GET FOLLOWERS
@@ -38,7 +40,9 @@ export const deleteFollower = id => (dispatch, getState) => {
                 payload: id
             });
         })
-        .catch(err => console.log(err));
+        .catch(err =>
+            dispatch(returnErrors(err.response.data, err.response.status))
+        );
 };
 
 // INVITE FOLLOWER
@@ -60,14 +64,13 @@ export const inviteFollower = invitedUsername => (dispatch, getState) => {
         );
 };
 
-// GET MY INVITES
-
-export const getMyInvites = () => (dispatch, getState) => {
+//GET INVITES
+export const getInvites = () => (dispatch, getState) => {
     axios
-        .get("/api/invites/myInvites/", tokenConfig(getState))
+        .get("/api/invites/", tokenConfig(getState))
         .then(res => {
             dispatch({
-                type: GET_MY_INVITES,
+                type: GET_INVITES,
                 payload: res.data
             })
         })
@@ -76,21 +79,6 @@ export const getMyInvites = () => (dispatch, getState) => {
         );
 }
 
-// GET INVITES
-
-export const getInvites = () => (dispatch, getState) => {
-    axios
-        .get("/api/invites/", tokenConfig(getState))
-        .then(res => {
-            dispatch({
-                type: GET_INVITES,
-                payload: res.data
-            });
-        })
-        .catch(err =>
-            dispatch(returnErrors(err.response.data, err.response.status))
-        );
-};
 
 // DELETE INVITE
 export const deleteInvite = id => (dispatch, getState) => {
@@ -103,5 +91,43 @@ export const deleteInvite = id => (dispatch, getState) => {
                 payload: id
             });
         })
-        .catch(err => console.log(err));
+        .catch(err =>
+            dispatch(returnErrors(err.response.data, err.response.status))
+        );
 };
+
+export const acceptInvite = (idUserWhoSentInvite, id) => (dispatch, getState) => {
+
+    const body = JSON.stringify({
+        idUserWhoSentInvite
+    });
+
+    axios
+        .post(`/api/follows/acceptFollower/`, body, tokenConfig(getState))
+        .then(res => {
+
+            dispatch({
+                type: ADD_FOLLOWER,
+                payload: res.data
+            });
+            axios
+                .delete(`/api/invites/${id}/`, tokenConfig(getState))
+                .then(res => {
+                    dispatch({
+                        type: DELETE_INVITE,
+                        payload: id
+                    });
+                    dispatch(createMessage({ acceptInvite: "Successfully accepted" }))
+                })
+                .catch(err =>
+                    console.log(err)
+                );
+
+        })
+        .catch(err =>
+            console.log(err)
+        );
+
+
+
+}

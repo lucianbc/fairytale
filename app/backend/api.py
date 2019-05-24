@@ -1,6 +1,6 @@
 from backend.models import Story, Follow, FollowInvite
 from rest_framework import viewsets, permissions
-from .serializers import StorySerializer, FollowSerializer, FollowSerializerForAdd, FollowInviteSerializer, FollowInviteSerializerForAdd, Example
+from .serializers import StorySerializer, FollowSerializer, FollowSerializerForAdd, FollowInviteSerializer, FollowInviteSerializerForAdd
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
@@ -42,7 +42,9 @@ class FollowViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
 
-        follow_relations = self.request.user.following.all()
+        follow_relations = self.request.user.following.all(
+        ) | self.request.user.followed_by.all()
+
         return follow_relations
 
     def create(self, request, *args, **kwargs):
@@ -63,6 +65,20 @@ class FollowViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    @list_route(methods=['POST'], renderer_classes=[renderers.JSONRenderer])
+    def acceptFollower(self, request, *args, **kwargs):
+
+        idUserWhoSentInvite = request.data.get("idUserWhoSentInvite")
+
+        serializer = self.get_serializer(
+            data={"following": request.user.id, "user": idUserWhoSentInvite})
+        serializer.is_valid(raise_exception=True)
+
+        follower = serializer.save()
+        # self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(FollowSerializer(follower).data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class FollowInviteViewSet(viewsets.ModelViewSet):
     permission_classes = [
@@ -74,20 +90,8 @@ class FollowInviteViewSet(viewsets.ModelViewSet):
             return FollowInviteSerializer
         return FollowInviteSerializerForAdd
 
-    @list_route(renderer_classes=[renderers.JSONRenderer])
-    def myInvites(self, request, *args, **kwargs):
-
-        try:
-            jsonArray = []
-            invites = FollowInvite.objects.all().filter(inviting=self.request.user)
-            for invite in invites:
-                jsonArray.append(FollowInviteSerializer(invite).data)
-            return Response(jsonArray)
-        except ObjectDoesNotExist:
-            return Response([])
-
     def get_queryset(self):
-        return self.request.user.inviting.all()
+        return self.request.user.inviting.all() | self.request.user.invited_by.all()
 
     def create(self, request, *args, **kwargs):
 
@@ -99,9 +103,11 @@ class FollowInviteViewSet(viewsets.ModelViewSet):
 
         user = request.user
         invalid = user.inviting.all().filter(inviting=inviting)
+        invalid2 = user.following.all().filter(following=inviting)
         if invalid:
-            return Response({"error": " " + invalid[0].inviting.username + " is already invited!"}, status=status.HTTP_404_NOT_FOUND)
-
+            return Response({"already_invited": [" " + invalid[0].inviting.username + " is already invited!"]}, status=status.HTTP_404_NOT_FOUND)
+        if invalid2:
+            return Response({"already_followed": [" " + invalid2[0].following.username + " is already followed!"]}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(
             data={"inviting": inviting, "user": user.id})
         serializer.is_valid(raise_exception=True)
