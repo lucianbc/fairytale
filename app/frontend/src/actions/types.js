@@ -17,6 +17,7 @@ export const PROFILE_UPDATE_FAIL = "PROFILE_UPDATE_FAILED";
 export const PASSWORD_CHANGED = "PASSWORD_CHANGED";
 export const PASSWORD_CHANGE_FAIL = "PASSWORD_CHANGE_FAIL";
 export const FOLLOWING_STORIES = "FOLLOWING_STORIES";
+<<<<<<< HEAD
 export const FOLLOWING_USERS = "FOLLOWING_USERS";
 
 export const GET_FOLLOWERS = "GET_FOLLOWERS";
@@ -29,3 +30,5 @@ export const GET_MY_FOLLOWERS = "GET_MY_FOLLOWERS";
 export const DELETE_INVITE = "DELETE_INVITE";
 export const CLEAR_INVITES = "CLEAR_INVITES";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
+=======
+>>>>>>> parent of 05cde25... feed design
