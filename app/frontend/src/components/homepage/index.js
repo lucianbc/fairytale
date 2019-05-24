@@ -8,5 +8,7 @@ import PropTypes from "prop-types";
 export default ({ match }) => (
   <div>
     <h1>Hello, user!</h1>
+    //
+    <followStories />
   </div>
 );

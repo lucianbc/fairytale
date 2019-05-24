@@ -23,6 +23,7 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import FairyEditor from "./editor";
 import HomePage from "./homepage";
+import followStories from "./followingStories/followStories";
 
 // Alert Options
 const alertOptions = {
@@ -33,7 +34,6 @@ const alertOptions = {
 };
 
 class App extends Component {
-
   componentWillMount() {
     store.dispatch(loadUser());
   }
@@ -56,8 +56,13 @@ class App extends Component {
                     component={FairyEditor}
                   />
                   <PrivateRoute exact path="/profile" component={ShowProfile} />
-                  <PrivateRoute exact path="/editProfile" component={EditProfile} />
-                  <PrivateRoute path="/" component={HomePage} />
+                  <PrivateRoute
+                    exact
+                    path="/editProfile"
+                    component={EditProfile}
+                  />
+                  <PrivateRoute path="/" component={followStories} />
+                  {/* <PrivateRoute path="/" component={HomePage} /> */}
                 </Switch>
               </div>
             </Fragment>
