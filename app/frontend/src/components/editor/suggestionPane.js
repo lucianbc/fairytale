@@ -1,18 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Editor } from "draft-js";
-import {getSuggestion, setAssistant, setSentences} from "../../actions/editor";
+import {getSuggestion, setAssistant, setSentences } from "../../actions/editor";
 import Select from "react-dropdown-select";
-
-const assistants = [
-  { label: "Adventure", value: "adventure" },
-  { label: "Horror", value: "horror" },
-  { label: "Mystery", value: "mystery" }
-];
 
 const suggestionPane = ({
   isSugestionLoading,
   suggestionState,
+  assistants,
+  sentences,
   getSuggestion,
   setAssistant,
   setSentences
@@ -25,8 +21,8 @@ const suggestionPane = ({
       >
         Ask
       </button>
-      <Select options={assistants} onChange={(values) => setAssistant(values[0])}/>
-      <input type={"range"} formatLabel={value => `${value}`} min={"1"} max={"10"} defaultValue={"1"} step={"1"} onChange={value => setSentences({ value })}/>
+      <Select values={[assistants[0]]} options={assistants} onChange={(values) => setAssistant(values[0])}/>
+      <input type={"range"} min={1} max={10} defaultValue={sentences} step={"1"} onChange={event => { setSentences(event.currentTarget.valueAsNumber)} }/>
       <span className={isSugestionLoading ? "ml-2" : "d-none"}>Loading...</span>
     </div>
     <div className="RichEditor-editor">

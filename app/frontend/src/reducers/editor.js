@@ -20,6 +20,12 @@ import {
   ASSISTANT_SET, SENTENCES_SET
 } from "../actions/editor";
 
+const assistants = [
+  { label: "Adventure", value: "adventure" },
+  { label: "Horror", value: "horror" },
+  { label: "Mystery", value: "mystery" }
+]
+
 const initialState = {
   editorState: EditorState.createEmpty(),
   suggestionState: EditorState.createEmpty(),
@@ -34,8 +40,9 @@ const initialState = {
   hasFetchedStory: false,
   overlayText: "Loading...",
   dirty: false,
-  assistant: "",
-  sentences: null
+  sentences: 2,
+  assistants: assistants,
+  assistant: assistants[0],
 };
 
 export default function(state = initialState, action) {
@@ -52,7 +59,7 @@ export default function(state = initialState, action) {
         isSugestionLoading: action.payload
       };
     case SUGGESTION_RECEIVED:
-      const content = ContentState.createFromText(action.payload);
+      const content = ContentState.createFromText(action.payload.data.result);
       return {
         ...state,
         suggestionState: EditorState.createWithContent(content)

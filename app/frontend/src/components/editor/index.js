@@ -3,7 +3,7 @@ import SuggestionPane from "./suggestionPane";
 import { TitleField, DescriptionField } from "./inputField";
 import React from "react";
 import { connect } from "react-redux";
-import { fetchStory } from "../../actions/editor";
+import { fetchStory, publish } from "../../actions/editor";
 
 import "./editor.css";
 
@@ -24,8 +24,17 @@ class editorScreen extends React.Component {
         </div>
         <div className={(this.props.showOverlay ? "invisible" : "visible")}>
           <div className="row mb-2">
-            <div className="col-md-12">
+            <div className="col-md-10">
               <TitleField className="mb-2" placeholder="Title" id={this.props.storyId}/>
+            </div>
+            <div className="col-md-2">
+              <button className="btn btn-success w-100" onClick={() => {this.props.publish(this.props.storyId)}}>
+                Publish
+              </button>
+            </div>
+          </div>
+          <div className="row mb-2">
+            <div className="col-md-12">
               <DescriptionField className="mb-2" placeholder="Description" id={this.props.storyId}/>
             </div>
           </div>
@@ -51,4 +60,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchStory })(editorScreen);
+export default connect(mapStateToProps, { fetchStory, publish })(editorScreen);
