@@ -27,3 +27,5 @@ export const GET_MY_FOLLOWERS = "GET_MY_FOLLOWERS";
 export const DELETE_INVITE = "DELETE_INVITE";
 export const CLEAR_INVITES = "CLEAR_INVITES";
 export const ADD_FOLLOWER = "ADD_FOLLOWER"
+
+export const USER_FOUND = "USER_FOUND"

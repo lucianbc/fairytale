@@ -27,7 +27,6 @@ class StoryViewSet(viewsets.ModelViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
-        print(request)
         return self.update(request, *args, **kwargs)
 
     @list_route(methods=['POST'], renderer_classes=[renderers.JSONRenderer])
@@ -41,6 +40,21 @@ class StoryViewSet(viewsets.ModelViewSet):
         print(payload)
         r = requests.post('http://localhost:5000/predict', json=payload)
         return Response(r.json(), status=status.HTTP_201_CREATED, content_type='application/json')
+
+    @list_route(methods=['POST'], renderer_classes=[renderers.JSONRenderer])
+    def userStories(self, request):
+
+        username = request.data.get("username")
+        try:
+            user = User.objects.get(username=username)
+            stories = user.stories.all().filter(published=True)
+            jsonArray = []
+            for story in stories:
+                jsonArray.append(StorySerializer(story).data)
+            return Response(jsonArray)
+
+        except ObjectDoesNotExist:
+            return Response({"invalid_username": ["Invalid username"]}, status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowViewSet(viewsets.ModelViewSet):

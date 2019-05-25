@@ -5,6 +5,7 @@ import messages from "./messages"
 import errors from "./errors"
 import userStories from "./userStories";
 import followers from "./followers";
+import userPage from "./userPage";
 
 export default combineReducers({
   editor,
@@ -13,4 +14,5 @@ export default combineReducers({
   messages,
   userStories,
   followers,
+  userPage,
 });

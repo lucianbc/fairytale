@@ -24,6 +24,7 @@ export class Following extends Component {
     }
 
     componentDidMount() {
+        debugger
         this.props.getFollowers();
         this.props.getInvites();
     }
