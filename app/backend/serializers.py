@@ -4,7 +4,7 @@ from accounts.serializers import UserSerializer
 
 
 class StorySerializer(serializers.ModelSerializer):
-    author=UserSerializer()
+    author = UserSerializer(read_only=True)
     class Meta:
         model = Story
         fields = '__all__'

@@ -10,7 +10,7 @@ class Story(models.Model):
     author = models.ForeignKey(User,
                                related_name="stories",
                                on_delete=models.CASCADE,
-                               null=True)
+                               null=True, blank=True)
     creationDate = models.DateTimeField(auto_now_add=True)
     lastEditDate = models.DateTimeField(auto_now=True)
     published = models.BooleanField(default=False)
