@@ -6,7 +6,7 @@ import { tokenConfig } from "./auth";
 export const getFollowingStories = () => (dispatch, getState) => {
   debugger;
   axios
-    .get("/api/stories/", tokenConfig(getState))
+    .get("/api/feed/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: FOLLOWING_STORIES,

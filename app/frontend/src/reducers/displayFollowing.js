@@ -1,4 +1,4 @@
-import { FOLLOWING_STORIES } from "../actions/types.js";
+import { FOLLOWING_STORIES, GET_FOLLOWERS } from "../actions/types.js";
 
 const initialState = {
   stories: []
