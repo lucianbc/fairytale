@@ -28,3 +28,4 @@ export const DELETE_INVITE = "DELETE_INVITE";
 export const CLEAR_INVITES = "CLEAR_INVITES";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
 export const FOLLOWING_STORIES = "FOLLOWING_STORIES";
+export const GET_STORY = "GET_STORY";
