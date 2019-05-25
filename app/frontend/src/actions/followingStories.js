@@ -18,12 +18,13 @@ export const getFollowingStories = () => (dispatch, getState) => {
 // GET STORY
 
 export const getStory = id => (dispatch, getState) => {
-  const { body } = JSON.stringify({ id });
+  // const { body } = JSON.stringify({ id });
+
+  const body = { id }
 
   axios
     .post(`/api/stories/getStory/`, body, tokenConfig(getState))
     .then(res => {
-      debugger;
       dispatch({
         type: GET_STORY,
         payload: res.data

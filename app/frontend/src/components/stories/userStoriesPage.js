@@ -63,7 +63,7 @@ class UserStoriesPage extends Component {
           <Route
             exact
             path={`${url}/published`}
-            component={StoriesView(stories.filter(s => s.published))}
+            component={StoriesView(stories.filter(s => s.published), null,false)}
           />
         </div>
         <div />
@@ -97,21 +97,25 @@ export default withRouter(
   )(UserStoriesPage)
 );
 
-const StoriesView = (stories, deleteStoryAction) => () => {
+const StoriesView = (stories, deleteStoryAction, shouldEdit = true) => () => {
   if (stories.length == 0) {
     return <div>No stories to show</div>;
   } else {
     return (
       <div className="mb-2 w-100">
-        {stories.map((story, i) => (
-          <StoryCard
-            story={story}
-            to={`/story/${story.id}/edit`}
-            linkText="Edit story"
-            key={i}
-            deleteAction={deleteStoryAction ? () => deleteStoryAction(story.id) : null}
-          />
-        ))}
+        {stories.map((story, i) => {
+          const link = shouldEdit ? `/story/${story.id}/edit` : `/story/${story.id}`;
+          const text = shouldEdit ? 'Edit story' : 'View Story';
+          return (
+            <StoryCard
+              story={story}
+              to={link}
+              linkText={text}
+              key={i}
+              deleteAction={deleteStoryAction ? () => deleteStoryAction(story.id) : null}
+            />
+          )
+        })}
       </div>
     );
   }
