@@ -22,6 +22,7 @@ export class Alerts extends Component {
             if (error.msg.username) alert.error(error.msg.username.join());
             if (error.msg.already_followed) alert.error(error.msg.already_followed.join());
             if (error.msg.already_invited) alert.error(error.msg.already_invited.join());
+            if (error.msg.invalid_username) alert.error(error.msg.invalid_username.join());
         }
 
         if (message !== prevProps.message) {

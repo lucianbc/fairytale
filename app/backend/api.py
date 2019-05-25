@@ -28,6 +28,21 @@ class StoryViewSet(viewsets.ModelViewSet):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
 
+    @list_route(methods=['POST'], renderer_classes=[renderers.JSONRenderer])
+    def userStories(self, request):
+
+        username = request.data.get("username")
+        try:
+            user = User.objects.get(username=username)
+            stories = user.stories.all().filter(published=True)
+            jsonArray = []
+            for story in stories:
+                jsonArray.append(StorySerializer(story).data)
+            return Response(jsonArray)
+
+        except ObjectDoesNotExist:
+            return Response({"invalid_username": ["Invalid username"]}, status=status.HTTP_404_NOT_FOUND)
+
 
 class FollowViewSet(viewsets.ModelViewSet):
     permission_classes = [

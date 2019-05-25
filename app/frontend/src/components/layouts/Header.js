@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
+import { searchUser } from "../../actions/userPage"
+
 import { NavDropdown } from "react-bootstrap";
 import "./header.css";
 import { newStory } from "../../actions/userStories";
@@ -11,35 +13,50 @@ export class Header extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    searchUser: PropTypes.func.isRequired
   };
+
+  state = {
+    username: ""
+  }
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  onSubmit = e => {
+
+    e.preventDefault();
+    const { username } = this.state
+    this.props.searchUser(username);
+  }
 
   profileCard = (user) => (
     <NavDropdown title={user ? `Welcome, ${user.username}` : ""} id="profileCard">
       <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-      <NavDropdown.Divider/>
+      <NavDropdown.Divider />
       <NavDropdown.Item href="/me/stories/drafts">Stories</NavDropdown.Item>
       <NavDropdown.Item onClick={() => { this.props.newStory() }}>New Story</NavDropdown.Item>
-      <NavDropdown.Divider/>
+      <NavDropdown.Divider />
       <div>
         <button
-            onClick={this.props.logout}
-            className="nav-link btn btn-info w-100 text-light">
-              Log Out
+          onClick={this.props.logout}
+          className="nav-link btn btn-info w-100 text-light">
+          Log Out
           </button>
       </div>
-    </NavDropdown>  
+    </NavDropdown>
   )
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
+    const { username } = this.state;
 
     const authLinks = (
       <div className="navbar-nav ml-auto mt-2 mt-lg-0">
-        { this.profileCard(user) }
+        {this.profileCard(user)}
       </div>
     );
 
@@ -58,12 +75,27 @@ export class Header extends Component {
       </ul>
     );
 
+    const searchForm = (
+      <div className="d-flex flex-row">
+        <form>
+          <input
+            type='text'
+            name="username"
+            value={username}
+            className="form-control"
+            onChange={this.onChange} />
+        </form>
+        <button onClick={this.onSubmit} className="btn btn-primary ml-2">Search user</button>
+      </div>
+    )
+
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-light mb-2">
         <div className="container">
           <a className="navbar-brand" href="/">
             Fairytale Gone Bad
           </a>
+          {isAuthenticated ? searchForm : <div></div>}
           <button
             className="navbar-toggler"
             type="button"
@@ -90,5 +122,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout, newStory }
+  { logout, searchUser, newStory }
 )(Header);
