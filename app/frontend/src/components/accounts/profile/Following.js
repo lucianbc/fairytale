@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { getFollowers, deleteFollower, inviteFollower, getInvites, deleteInvite, acceptInvite } from "../../../actions/followers";
+import { navigate } from "../../../actions/navigate"
 
 
 export class Following extends Component {
@@ -79,7 +80,7 @@ export class Following extends Component {
                                             </div>
 
                                             <div className="d-flex flex-column" style={{ marginTop: '3%', width: '10%' }}>
-                                                <button className="btn btn-primary btn-sm mt-3">View profile</button>
+                                                <button className="btn btn-primary btn-sm mt-3" onClick={() => navigate("/userPage/" + follower.following.username)}>View profile</button>
                                                 <button className="btn btn-danger btn-sm mt-3" style={{ textAlign: 'center' }}
                                                     onClick={this.props.deleteFollower.bind(this, follower.id)}>
                                                     Remove
@@ -115,7 +116,7 @@ export class Following extends Component {
                                                 <p> {invite.inviting.profile.bio}</p>
                                             </div>
                                             <div className="d-flex flex-column" style={{ marginTop: '3%', width: '10%' }}>
-                                                <button className="btn btn-primary btn-sm mt-3">View profile</button>
+                                                <button className="btn btn-primary btn-sm mt-3" onClick={() => navigate("/userPage/" + invite.inviting.username)}>View profile</button>
                                                 <button className="btn btn-danger btn-sm mt-3" style={{ textAlign: 'center' }}
                                                     onClick={this.props.deleteInvite.bind(this, invite.id)}>
                                                     Remove
@@ -166,7 +167,7 @@ export class Following extends Component {
                                             </div>
                                             <div className="d-flex flex-column" style={{ width: '10%' }}>
                                                 <button className="btn btn-primary btn-sm mt-3" onClick={this.props.acceptInvite.bind(this, invite.user.id, invite.id)}>Accept</button>
-                                                <button className="btn btn-primary btn-sm mt-3">View profile</button>
+                                                <button className="btn btn-primary btn-sm mt-3" onClick={() => navigate("/userPage/" + invite.user.username)}>View profile</button>
                                                 <button className="btn btn-danger btn-sm mt-3" style={{ textAlign: 'center' }}
                                                     onClick={this.props.deleteInvite.bind(this, invite.id)}>
                                                     Remove
@@ -203,7 +204,7 @@ export class Following extends Component {
                                         </div>
                                         <div className="d-flex flex-column" style={{ width: '10%' }}>
 
-                                            <button className="btn btn-primary btn-sm mt-3">View profile</button>
+                                            <button className="btn btn-primary btn-sm mt-3" onClick={() => navigate("/userPage/" + follower.user.username)}>View profile</button>
                                             <button className="btn btn-danger btn-sm mt-3" style={{ textAlign: 'center' }}
                                                 onClick={this.props.deleteFollower.bind(this, follower.id)}>
                                                 Remove

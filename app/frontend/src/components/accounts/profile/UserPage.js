@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { searchUser } from "../../../actions/userPage"
+import { navigate } from "../../../actions/navigate"
 import "./userPage.css"
 
 export class UserPage extends Component {
@@ -34,16 +35,20 @@ export class UserPage extends Component {
                                 />
                                 <div className='d-flex flex-column' style={{ paddingTop: '5% ' }}>
                                     <h5>{story.author.username}</h5>
-                                    <h5>{story.description}</h5>
+                                    <h5>{story.title}</h5>
                                     <h5> Shared publicly: {story.creationDate} </h5>
                                 </div>
                             </div>
                             <div className="panel-body " style={{ marginTop: '2%' }}>
-                                <h6 style={{ paddingBottom: "2%", marginLeft: '2%' }}>{story.content} ...</h6>
+                                <h6 style={{ paddingBottom: "2%", marginLeft: '2%' }}>{story.description} </h6>
                             </div>
                             <div className="panel-footer pt-2">
 
-                                <button className='btn btn-secondary btn-sm ml-2' style={{ marginTop: '0.5%' }}>Read more</button>
+                                <button
+                                    className='btn btn-secondary btn-sm ml-2'
+                                    style={{ marginTop: '0.5%' }}
+                                    onClick={() => navigate("/story/" + story.id)}
+                                >Read more</button>
                             </div>
                         </div>
                     </div>
