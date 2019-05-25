@@ -8,10 +8,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from accounts.serializers import UserSerializer
 from rest_framework.decorators import list_route
 import rest_framework.renderers as renderers
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import action
+import requests
 
 # Story Viewset
-
-
 class StoryViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated
@@ -27,6 +28,18 @@ class StoryViewSet(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
+
+    @list_route(methods=['POST'], renderer_classes=[renderers.JSONRenderer])
+    def generate(self, request, *args, **kwargs):
+        print("Got to the request")
+        payload = {
+            'text': request.data.get('text'),
+            'model': request.data.get('model'),
+            'sentences': request.data.get('sentences')
+        }
+        print(payload)
+        r = requests.post('http://localhost:5000/predict', json=payload)
+        return Response(r.json(), status=status.HTTP_201_CREATED, content_type='application/json')
 
     @list_route(methods=['POST'], renderer_classes=[renderers.JSONRenderer])
     def userStories(self, request):
@@ -94,6 +107,7 @@ class FollowViewSet(viewsets.ModelViewSet):
         # self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(FollowSerializer(follower).data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 
 class FollowInviteViewSet(viewsets.ModelViewSet):

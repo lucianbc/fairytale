@@ -3,6 +3,8 @@ import axios from "axios";
 import { tokenConfig } from "./auth";
 import { convertToRaw } from 'draft-js';
 
+import { navigate } from './navigate';
+
 const AUTOSAVE_TIME_MS = 500;
 
 export const UPDATE_EDITOR_CONTENT = "EDITOR_UPDATE_EDITOR_CONTENT";
@@ -23,7 +25,10 @@ export const ACTIVATE_DESC_EDIT = "EDITOR_ACTIVATE_DESC_EDIT";
 export const UPDATE_OVERLAY = "EDITOR_UPDATE_OVERLAY";
 export const STORY_FETCHED = "EDITOR_STORY_FETCHED";
 export const STORY_CONTENT_SAVED = "EDITOR_STORY_CONTENT_SAVED";
+export const ASSISTANT_SET = "ASSISTANT_SET";
+export const SENTENCES_SET = "SENTENCES_SET";
 
+export const PUBLISHED = "STORY_PUBLISH"
 
 export const updateTitle = storyId => title => (dispatch, getState) => {
   axios
@@ -34,6 +39,17 @@ export const updateTitle = storyId => title => (dispatch, getState) => {
       });
     });
 };
+
+export const publish = storyId => (dispatch, getState) => {
+  axios
+    .patch(`/api/stories/${storyId}/`, { published: true }, tokenConfig(getState))
+    .then(() => {
+      navigate('/me/stories/published')
+    })
+    .catch(err => {
+      console.error(err)
+    })
+}
 
 export const cancelTitle = () => dispatch => {
   dispatch({
@@ -91,14 +107,26 @@ export const updateEditorContent = editorState => (dispatch, getState) => {
   });
 };
 
-export const getSuggestion = () => dispatch => {
+export const getSuggestion = () => (dispatch, getState) => {
   dispatch(suggestionLoading(true));
-  suggestionApiCall().then(response => {
+  const state = getState()
+
+  const payload = {
+    "text": state.editor.editorState.getCurrentContent().getPlainText(),
+    "model": state.editor.assistant.value,
+    "sentences": state.editor.sentences
+  }
+  axios.post(`/api/stories/generate/`, payload, tokenConfig(getState))
+  .then(response => {
     dispatch(suggestionLoading(false));
     dispatch({
       type: SUGGESTION_RECEIVED,
       payload: response
     });
+  })
+  .catch(err => {
+    dispatch(suggestionLoading(false));
+    console.error(err)
   });
 };
 
@@ -124,16 +152,6 @@ export const fetchStory = (id) => (dispatch, getState) => {
     });
 };
 
-const suggestionApiCall = () =>
-  new Promise(function(resolve, reject) {
-    console.log("Making a call");
-    setTimeout(function() {
-      const text = Math.random()
-        .toString(36)
-        .substring(7);
-      resolve(text);
-    }, 1000);
-  });
 
 const suggestionLoading = isLoading => {
   return {
@@ -157,3 +175,21 @@ const saveOnServer = debounce((editorState, getState, dispatch) => {
       console.log(err);
     })
 }, AUTOSAVE_TIME_MS);
+
+export const setAssistant = (assitantId) => dispatch => {
+  if (assitantId) {
+    dispatch({
+      type: ASSISTANT_SET,
+      payload: assitantId
+    })
+  }
+};
+
+export const setSentences = (sentences) => dispatch => {
+  if (sentences) {
+    dispatch({
+      type: SENTENCES_SET,
+      payload: sentences
+    })
+  }
+}

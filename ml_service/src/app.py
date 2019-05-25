@@ -27,6 +27,7 @@ def init():
 @app.route('/predict', methods=['POST'])
 def predict():
     content = flask.request.json
+    print(content)
     text = content['text']
     model_id = content['model']
     nr_sentences = content['sentences']
