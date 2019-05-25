@@ -1,7 +1,7 @@
 import axios from "axios";
 import { returnErrors, createMessage } from "./messages";
 import { tokenConfig } from "./auth";
-import { navigate } from "../actions/navigate"
+import { navigate } from "./navigate"
 
 import { USER_FOUND } from "./types"
 

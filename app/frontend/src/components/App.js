@@ -26,7 +26,7 @@ import FairyEditor from "./editor";
 import HomePage from "./homepage";
 import UserStoriesPage from "./stories/userStoriesPage";
 import history from "../actions/navigate";
-import { UserPage } from "./accounts/profile/UserPage";
+import UserPage from "./accounts/profile/UserPage";
 
 
 // Alert Options
@@ -64,7 +64,7 @@ class App extends Component {
                   <PrivateRoute exact path="/editProfile" component={EditProfile} />
                   <PrivateRoute exact path="/following" component={Following} />
                   <PrivateRoute path="/me/stories" component={UserStoriesPage} />
-                  <PrivateRoute path="/userPage/:userId" component={UserPage} />
+                  <PrivateRoute exact path="/userPage/:id" component={UserPage} />
                   <PrivateRoute path="/" component={HomePage} />
                 </Switch>
               </div>
