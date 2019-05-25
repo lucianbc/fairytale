@@ -3,7 +3,7 @@ import {
   UPDATE_EDITOR_CONTENT,
   LOADING_UPDATE,
   SUGGESTION_RECEIVED,
-  
+
   TITLE_EDIT_CANCEL,
   TITLE_UPDATED,
   TITLE_TYPE,
@@ -16,7 +16,8 @@ import {
 
   UPDATE_OVERLAY,
   STORY_FETCHED,
-  STORY_CONTENT_SAVED
+  STORY_CONTENT_SAVED,
+  ASSISTANT_SET, SENTENCES_SET
 } from "../actions/editor";
 
 const initialState = {
@@ -32,7 +33,9 @@ const initialState = {
   actualDescContent: "",
   hasFetchedStory: false,
   overlayText: "Loading...",
-  dirty: false
+  dirty: false,
+  assistant: "",
+  sentences: null
 };
 
 export default function(state = initialState, action) {
@@ -122,6 +125,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         dirty: false
+      };
+    case ASSISTANT_SET:
+      return {
+        ...state,
+        assistant: action.payload
+    };
+    case SENTENCES_SET:
+      return {
+        ...state,
+        sentences: action.payload
       }
     default:
       return state;

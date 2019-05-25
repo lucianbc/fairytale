@@ -23,7 +23,8 @@ export const ACTIVATE_DESC_EDIT = "EDITOR_ACTIVATE_DESC_EDIT";
 export const UPDATE_OVERLAY = "EDITOR_UPDATE_OVERLAY";
 export const STORY_FETCHED = "EDITOR_STORY_FETCHED";
 export const STORY_CONTENT_SAVED = "EDITOR_STORY_CONTENT_SAVED";
-
+export const ASSISTANT_SET = "ASSISTANT_SET";
+export const SENTENCES_SET = "SENTENCES_SET";
 
 export const updateTitle = storyId => title => (dispatch, getState) => {
   axios
@@ -157,3 +158,17 @@ const saveOnServer = debounce((editorState, getState, dispatch) => {
       console.log(err);
     })
 }, AUTOSAVE_TIME_MS);
+
+export const setAssistant =  (assitantId) => dispatch => {
+  dispatch({
+    type: ASSISTANT_SET,
+    payload: assitantId
+  })
+};
+
+export const setSentences = (sentences) => dispatch => {
+  dispatch({
+    type: SENTENCES_SET,
+    payload: sentences
+  })
+}
