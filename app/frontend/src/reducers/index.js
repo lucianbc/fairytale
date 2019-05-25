@@ -15,6 +15,6 @@ export default combineReducers({
   messages,
   userStories,
   followers,
-  displayFollowing
+  displayFollowing,
   userPage,
 });

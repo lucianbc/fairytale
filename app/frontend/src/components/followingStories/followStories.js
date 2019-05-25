@@ -7,7 +7,7 @@ import "../../styles/styler.css";
 import { navigate } from "../../actions/navigate";
 
 export class FollowStories extends Component {
-  static PropTypes = {
+  static propTypes = {
     stories: PropTypes.array.isRequired
   };
 
@@ -46,15 +46,15 @@ export class FollowStories extends Component {
                   className="d-flex flex-column"
                   style={{ paddingTop: "5% " }}
                 >
+                  <h4>{story.title}</h4>
                   <h5>{story.author.username}</h5>
-                  <h5>{story.description}</h5>
                   <h5> Shared publicly: {story.creationDate} </h5>
                 </div>
               </div>
-              <div className="panel-body " style={{ marginTop: "2%" }}>
-                <h6 style={{ paddingBottom: "2%", marginLeft: "2%" }}>
-                  {story.content} ...
-                </h6>
+              <div className="panel-body " style={{ marginTop: "2%", paddingLeft: "30px" }}>
+                <h4>
+                  { story.description }
+                </h4>
               </div>
               <div className="panel-footer pt-2">
                 <button
