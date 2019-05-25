@@ -29,3 +29,5 @@ export const CLEAR_INVITES = "CLEAR_INVITES";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
 export const FOLLOWING_STORIES = "FOLLOWING_STORIES";
 export const GET_STORY = "GET_STORY";
+
+export const USER_FOUND = "USER_FOUND"

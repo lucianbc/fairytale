@@ -3,7 +3,7 @@ import {
   UPDATE_EDITOR_CONTENT,
   LOADING_UPDATE,
   SUGGESTION_RECEIVED,
-  
+
   TITLE_EDIT_CANCEL,
   TITLE_UPDATED,
   TITLE_TYPE,
@@ -16,8 +16,15 @@ import {
 
   UPDATE_OVERLAY,
   STORY_FETCHED,
-  STORY_CONTENT_SAVED
+  STORY_CONTENT_SAVED,
+  ASSISTANT_SET, SENTENCES_SET
 } from "../actions/editor";
+
+const assistants = [
+  { label: "Adventure", value: "adventure" },
+  { label: "Horror", value: "horror" },
+  { label: "Mystery", value: "mystery" }
+]
 
 const initialState = {
   editorState: EditorState.createEmpty(),
@@ -32,7 +39,10 @@ const initialState = {
   actualDescContent: "",
   hasFetchedStory: false,
   overlayText: "Loading...",
-  dirty: false
+  dirty: false,
+  sentences: 2,
+  assistants: assistants,
+  assistant: assistants[0],
 };
 
 export default function(state = initialState, action) {
@@ -49,7 +59,7 @@ export default function(state = initialState, action) {
         isSugestionLoading: action.payload
       };
     case SUGGESTION_RECEIVED:
-      const content = ContentState.createFromText(action.payload);
+      const content = ContentState.createFromText(action.payload.data.result);
       return {
         ...state,
         suggestionState: EditorState.createWithContent(content)
@@ -122,6 +132,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         dirty: false
+      };
+    case ASSISTANT_SET:
+      return {
+        ...state,
+        assistant: action.payload
+    };
+    case SENTENCES_SET:
+      return {
+        ...state,
+        sentences: action.payload
       }
     default:
       return state;

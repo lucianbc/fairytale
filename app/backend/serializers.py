@@ -4,7 +4,6 @@ from accounts.serializers import UserSerializer
 
 
 class StorySerializer(serializers.ModelSerializer):
-
     author=UserSerializer()
     class Meta:
         model = Story

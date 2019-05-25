@@ -6,6 +6,7 @@ import errors from "./errors";
 import userStories from "./userStories";
 import followers from "./followers";
 import displayFollowing from "./displayFollowing";
+import userPage from "./userPage";
 
 export default combineReducers({
   editor,
@@ -15,4 +16,5 @@ export default combineReducers({
   userStories,
   followers,
   displayFollowing
+  userPage,
 });
