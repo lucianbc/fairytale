@@ -8,34 +8,27 @@ This is a university project developed for the Software Engineering Course at th
 
 ## Installation
 
-First, activate Pipenv:
-
 ```bash
+# First, activate Pipenv:
 pipenv shell
-```
 
-Then install the npm deps:
+# Install python dependencies
+pipenv install
 
-```bash
+# Then install the npm dependencies:
 npm install
 ```
 
+
 ## Development
 
-Build and frontend app and watch for changes:
-
 ```bash
+# Build and frontend app and watch for changes:
 npm run dev
-```
 
-(Optional) Start the django livereload server:
-
-```bash
+# (Optional) Start the django livereload server:
 ./app/manage.py livereload
-```
 
-Start the django server:
-
-```bash
+# Start the django server:
 ./app/manage.py runserver
 ```
